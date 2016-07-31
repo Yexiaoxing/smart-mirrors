@@ -5,8 +5,8 @@ from os.path import join as path_join, isdir, getsize, getmtime, getctime, exist
 from os import listdir, mkdir
 from time import process_time
 
-json_path = "/Users/yexiaoxing/Projects/AOSC/filelist-generator/json/"
-search_root = "/Users/yexiaoxing/Projects"
+json_path = "json/"
+search_root = "/mirror"
 log_path = "filelistgenerator.log"
 
 log_list = []
