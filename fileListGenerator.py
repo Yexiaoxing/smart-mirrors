@@ -27,7 +27,7 @@ def createDict(path, root={}):
     pathList = listdir(path)
     for i, item in enumerate(pathList):
         file_path = path_join(path, item)
-        if item not in ignore_dir:
+        if item not in ignore_dir and exists(file_path):
             if isdir(file_path):
                 if not root.get("item", False):
                     root[item] = {"type": "dir", "files": {}}
@@ -59,14 +59,14 @@ def walkRoot(root):
 
     path_list = listdir(search_root)
     for i, item in enumerate(path_list):
-        if not exists(path_join(json_path, item + ".json")):
-            inFile = open(path_join(json_path, item + ".json"), 'x')
-            inFile.write("{}")
-            inFile.close()
-        with open(path_join(json_path, item + ".json"), 'r') as inFile:
-            path = path_join(root, item)
-            print(path)
-            if isdir(path):
+        path = path_join(root, item)
+        print(path)
+        if isdir(path):
+            if not exists(path_join(json_path, item + ".json")):
+                inFile = open(path_join(json_path, item + ".json"), 'x')
+                inFile.write("{}")
+                inFile.close()
+            with open(path_join(json_path, item + ".json"), 'r') as inFile:
                 generateJSON(json_path, item, createDict(path, json.load(inFile)))
 
 def generateJSON(json_path, dir_name, file_dict):
