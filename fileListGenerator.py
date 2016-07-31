@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import json, hashlib
+import json, hashlib, datetime
 from os.path import join as path_join, isdir, getsize, getmtime, getctime, exists
-from os import listdir
+from os import listdir, mkdir
 from time import process_time
 
 json_path = "/Users/yexiaoxing/Projects/AOSC/filelist-generator/json/"
@@ -54,6 +54,9 @@ def createDict(path, root={}):
     return root
 
 def walkRoot(root):
+    if not exists(json_path):
+        mkdir(json_path)
+
     path_list = listdir(search_root)
     for i, item in enumerate(path_list):
         if not exists(path_join(json_path, item + ".json")):
@@ -86,6 +89,7 @@ def sha256(file_path):
     return hash.hexdigest()
 
 startTime = process_time()
+print("Process starts at " + datetime.datetime.now())
 walkRoot(search_root)
 endTime = process_time()
 
