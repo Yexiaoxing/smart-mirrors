@@ -9,6 +9,8 @@ json_path = "json/"
 search_root = "/mirror"
 log_path = "filelistgenerator.log"
 
+root_dirs = []
+
 log_list = []
 
 ignore_dir = [".DS_Store", ".git"]
@@ -62,12 +64,16 @@ def walkRoot(root):
         path = path_join(root, item)
         print(path)
         if isdir(path):
+            root_dirs.append(item)
             if not exists(path_join(json_path, item + ".json")):
                 inFile = open(path_join(json_path, item + ".json"), 'x')
                 inFile.write("{}")
                 inFile.close()
             with open(path_join(json_path, item + ".json"), 'r') as inFile:
                 generateJSON(json_path, item, createDict(path, json.load(inFile)))
+    
+    with open(path_join(json_path, "rootdirs.json"), "w") as handler:
+        handler.write(json.dumps(root_dirs))
 
 def generateJSON(json_path, dir_name, file_dict):
     with open(path_join(json_path, dir_name + ".json"), 'w') as handler:
