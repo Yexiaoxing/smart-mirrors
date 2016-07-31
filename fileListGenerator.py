@@ -89,7 +89,7 @@ def sha256(file_path):
     return hash.hexdigest()
 
 startTime = process_time()
-print("Process starts at " + datetime.datetime.now())
+print("Process starts at " + str(datetime.datetime.now()))
 walkRoot(search_root)
 endTime = process_time()
 
