@@ -90,5 +90,5 @@ walkRoot(search_root)
 endTime = process_time()
 
 log("All done within" + search_root)
-log("Execution Time:", endTime - startTime)
+log("Execution Time:" + (endTime - startTime))
 log_finish()
