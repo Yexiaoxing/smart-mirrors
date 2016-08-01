@@ -13,7 +13,7 @@ root_dirs = []
 
 log_list = []
 
-ignore_dir = [".DS_Store", ".git"]
+ignore_dir = [".DS_Store", ".git", "_h5ai"]
 #response = open(local_filename)
 #with open(fileNameToSave, 'w') as fileHandler:
 #    fileHandler.write(json.dumps(wordList))
@@ -100,5 +100,5 @@ walkRoot(search_root)
 endTime = process_time()
 
 log("All done within" + search_root)
-log("Execution Time:" + (endTime - startTime))
+log("Execution Time:" + str(endTime - startTime))
 log_finish()
