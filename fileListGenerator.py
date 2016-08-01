@@ -32,11 +32,12 @@ def createDict(path, root={}):
         file_path = path_join(path, item)
         if item not in ignore_dir and exists(file_path):
             if isdir(file_path):
-                if not root.get("item", False):
+                if not root.get(item, False):
                     root[item] = {"type": "dir", "files": {}}
                 createDict(file_path, root[item]["files"])
             else:
-                if not root.get("item", False):
+                if not root.get(item, False):
+                    log("new file " + file_path)
                     root[item] = {"type": "file",
                                   "file_size": getsize(file_path),
                                   "mtime": getmtime(file_path), 
@@ -70,9 +71,9 @@ def walkRoot(root):
                 inFile.write("{}")
                 inFile.close()
             with open(path_join(json_path, item + ".json"), 'r') as inFile:
-                log(item + "generating at " + str(datetime.datetime.now()))
+                log(item + " generating at " + str(datetime.datetime.now()))
                 generateJSON(json_path, item, createDict(path, json.load(inFile)))
-                log(item + "generated at " + str(datetime.datetime.now()))
+                log(item + " generated at " + str(datetime.datetime.now()))
     
     with open(path_join(json_path, "rootdirs.json"), "w") as handler:
         handler.write(json.dumps(root_dirs))
