@@ -19,6 +19,7 @@ ignore_dir = [".DS_Store", ".git", "_h5ai"]
 #    fileHandler.write(json.dumps(wordList))
 
 def log(log_msg):
+    print(log_msg)
     log_list.append([process_time(), log_msg])
 
 def log_finish():
@@ -62,7 +63,6 @@ def walkRoot(root):
     path_list = listdir(search_root)
     for i, item in enumerate(path_list):
         path = path_join(root, item)
-        print(path)
         if isdir(path):
             root_dirs.append(item)
             if not exists(path_join(json_path, item + ".json")):
@@ -70,7 +70,9 @@ def walkRoot(root):
                 inFile.write("{}")
                 inFile.close()
             with open(path_join(json_path, item + ".json"), 'r') as inFile:
+                log(item + "generating at " + str(datetime.datetime.now()))
                 generateJSON(json_path, item, createDict(path, json.load(inFile)))
+                log(item + "generated at " + str(datetime.datetime.now()))
     
     with open(path_join(json_path, "rootdirs.json"), "w") as handler:
         handler.write(json.dumps(root_dirs))
@@ -78,7 +80,7 @@ def walkRoot(root):
 def generateJSON(json_path, dir_name, file_dict):
     with open(path_join(json_path, dir_name + ".json"), 'w') as handler:
         handler.write(json.dumps(file_dict))
-    print(dir_name + " json generated")
+    print(dir_name + " json generated at " + str(datetime.datetime.now()))
 
 def md5(file_path):
     hash_md5 = hashlib.md5()
