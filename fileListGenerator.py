@@ -24,7 +24,7 @@ def log(log_msg):
 
 def log_finish():
     with open(log_path, "w") as handler:
-        handler.write("\n".join(" ".join(i) for i in log_list))
+        handler.write("\n".join(" ".join([str(a) for a in i]) for i in log_list))
 
 def createDict(path, root={}):
     pathList = listdir(path)
